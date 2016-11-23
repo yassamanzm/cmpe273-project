@@ -1,0 +1,37 @@
+Activate ISCAN service if necessary
+$ sudo hciconfig hci0 piscan
+
+ Confirm it’s up and running
+$ sudo hciconfig -a
+
+Start bluetoothctl utility
+$ bluetoothctl
+
+Run the following commands to make RP discoverable by other devices and register an agent
+$ discoverable on
+$ agent on
+$ default-agent
+
+-- You should be able to see raspberrypi in your list of bluetooth available devices
+
+If you need to run bluetooth service in debug mode to get logs:
+$ bluetoothd -d -n
+
+Other modifications on RP (https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=125922 ):
+$ sudo nano /etc/systemd/system/bluetooth.target.wants/bluetooth.service
+
+Modify the file and add --noplugin=sap --compat options: 
+	ExecStart=/usr/lib/bluetooth/bluetoothd --noplugin=sap --compat
+
+$ sudo systemctl daemon-reload
+$ sudo service bluetooth restart
+$ sudo service bluetooth status
+
+If you get 
+	sdptool browse local
+	Failed to connect to SDP server on FF:FF:FF:00:00:00: Permission denied
+Run
+	$ sudo chmod 777 /var/run/sdp
+
+Install:
+	$ sudo apt-get install python-bluez

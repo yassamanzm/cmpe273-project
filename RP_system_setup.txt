@@ -1,0 +1,34 @@
+Raspberry Pi 3 Model B 1 G RAM
+
+Installing OS and extras: https://www.raspberrypi.org/files/legacy/qsg.pdf
+
+Note: You may not need to format your SD card
+
+OS: Raspbian Jessie
+
+$ sudo apt-get update
+$ sudo apt-get upgrade
+To install Nginx:
+	$ sudo apt-get install nginx
+Start the nginx server:
+	$ sudo service nginx start
+Finf ip address: 
+	$ ifconfig
+
+Install NodeJS: 
+	$ wget http://node-arm.herokuapp.com/node_latest_armhf.deb
+	$ sudo dpkg -i node_latest_armhf.deb
+
+
+Set up version 2.1.1 of MongoDB (https://www.toptal.com/raspberry-pi/how-to-turn-your-raspberry-pi-into-a-development-server):
+
+	$ git clone https://github.com/svvitale/mongo4pi
+	$ cd mongo4pi
+	$ ./install.sh
+To start the MongoDB shell, you need to modify your path to access the binaries:
+
+	$ PATH=$PATH:/opt/mongo/bin/
+	$ export PATH
+Just be aware that if you ever need to turn off the Raspberry Pi, you need to shut down the service first in order to avoid database corruption:
+	$ sudo service mongod stop
+
